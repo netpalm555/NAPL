@@ -14,14 +14,22 @@
 - cont varaibles must be assigned when declared and are evaluated at compile time (operations and math can still be preformed as long as they are also cont)
 
 ```
-var myVariable = 10 // myVariable in inferred to have a type of Integer  
-myVariable = true // error: myVariable is type-checked and cannot be a Boolean once it is an Integer  
-var myVarVariable // will be type-checked when assigned a value; evaluates to null until then  
-myVarVariable = 10 // now type-checked to be an Integer  
-dyn mySecondVar = 10 // mySecondVar is not type-checked at compile time  
-mySecondVar = true // no error: mySecondVar is dynamic and can change types during runtime  
-const myConstantVar = 10 // myConstantVar is not mutable and set to an Integer  
-myConstantVar = 5 // error: myConstantVar is not mutable  
+var myVariable = 10 // myVariable in inferred to have a type of Integer
+
+myVariable = true // error: myVariable is type-checked and cannot be a Boolean once it is an Integer
+
+var myVarVariable // will be type-checked when assigned a value; evaluates to null until then
+
+myVarVariable = 10 // now type-checked to be an Integer
+
+dyn mySecondVar = 10 // mySecondVar is not type-checked at compile time
+
+mySecondVar = true // no error: mySecondVar is dynamic and can change types during runtime
+
+const myConstantVar = 10 // myConstantVar is not mutable and set to an Integer
+
+myConstantVar = 5 // error: myConstantVar is not mutable
+
 myConstantVar = true // error: myConstantVar is not mutable and type-checked  
 ```
 
@@ -37,11 +45,17 @@ myConstantVar = true // error: myConstantVar is not mutable and type-checked
 - functions that can either return or not return anything should be declared with dyn
 
 ```
-var myFunction = () {} // basic function structure; will return null when executed since there is not return statement  
-var myFunction = (int x, int y) {return * (x, y)} // only returns type of int and is correctly declared with var  
-dyn myFunction = (int x, int y) {return * (x, y)} // var should be used since only one type is ever possibly returned although it is not illegal  
-const myFunction = (const int x, const int y) {return * (x, y)} // correct: function is const and relies only on const variables  
-const myFunction = (int x, int y) {return * {x, y}} // error: a const function can only use const parameters  
-var myFunction = (dyn x, dyn y) {return * (x, y)} // error: the return type of myFunction is undefined since dyn variables are used  
+var myFunction = () {} // basic function structure; will return null when executed since there is not return statement
+
+var myFunction = (int x, int y) {return * (x, y)} // only returns type of int and is correctly declared with var
+
+dyn myFunction = (int x, int y) {return * (x, y)} // var should be used since only one type is ever possibly returned although it is not illegal
+
+const myFunction = (const int x, const int y) {return * (x, y)} // correct: function is const and relies only on const variables
+
+const myFunction = (int x, int y) {return * {x, y}} // error: a const function can only use const parameters
+
+var myFunction = (dyn x, dyn y) {return * (x, y)} // error: the return type of myFunction is undefined since dyn variables are used
+
 var myFunction = (dyn x, dyn y) {return (int) * (x, y)} // ok: the return type is guaranteed to be castable to an int; may still result in an error if * (x, y) cannot be cast to an int  
 ```
