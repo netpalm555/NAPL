@@ -3,8 +3,10 @@
 ## Comments:
 - Java, C, C++ style for Comments
 
+```
 // this is a end-line comment  
 /* this is a block comment */
+```
 
 ## Variable Declaration:
 - variables declared with var are type-checked at compile time

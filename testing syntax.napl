@@ -1,0 +1,35 @@
+// This is my testing bed for how I want certain features of the language to look.
+
+// Test Hello World program
+var main = (...) {
+  print ("Hello World")
+}
+
+// Simple extended Hello World program
+var main = (...) {
+  extendedPrint ("Hello World")
+}
+
+var extendedPrint = (var textToPrint) {
+  print (textToPrint)
+}
+
+// Function passing as variables
+var main = (...) {
+  var functionToPass = () {return "Hello World"}
+  extendedPrint(functionToPass()) // function is passed with parameters and only evaluated once
+}
+
+var extendedPrint = (var textToPrint) {
+  print (textToPrint)
+}
+
+// Alternative function passing
+var main = (...) {
+  var functionToPass = () {return "Hello World"}
+  extendedPrint(functionToPass // function is passed without parameters
+}
+
+var extendedPrint = (func textToPrint) {
+  print (textToPrint()) // function is called with parameters and can be evaluated more than once
+}
