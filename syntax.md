@@ -1,63 +1,216 @@
 # The Syntax of NAPL
 
+## Things to know
+- NAPL does not use semi-colons to signify the end of a statement (like Python)
+    - however, indentation does not define program structure (unlike Python)
+
 ## Comments:
 - Java, C, C++ style for Comments
 
-```
-// this is a end-line comment  
-/* this is a block comment */
-```
+  ```
+  // this is a end-line comment  
+  /* this is a block comment */
+  ```
 
-## Variable Declaration:
-- variables declared with var are type-checked at compile time
-- variables declared with const are type-checked at compile time and are not mutable
-- variables declared with dyn are not type-checked and their type can change during runtime
-- variable declarations without assignments return null when used and are not type-checked until assigned (expect for dyn variables)
-- cont varaibles must be assigned when declared and are evaluated at compile time (operations and math can still be preformed as long as they are also cont)
+## Variables:
+- all variable's types are inferred by the compiler
+    - variables declared with var are type-checked at compile time
 
-```
-var myVariable = 10 // myVariable in inferred to have a type of Integer
+  ```
+  var myVariable = 10 // myVariable in inferred to have a type of Integer
 
-myVariable = true // error: myVariable is type-checked and cannot be a Boolean once it is an Integer
+  myVariable = true // error: myVariable is type-checked and cannot be a Boolean once it is an Integer
+  ```
+    - variables declared with const are type-checked at compile time and are not mutable
 
-var myVarVariable // will be type-checked when assigned a value; evaluates to null until then
+  ```
+  const myConstantVar = 10 // myConstantVar is not mutable and set to an Integer
 
-myVarVariable = 10 // now type-checked to be an Integer
+  myConstantVar = 5 // error: myConstantVar is not mutable
 
-dyn mySecondVar = 10 // mySecondVar is not type-checked at compile time
+  myConstantVar = true // error: myConstantVar is not mutable and type-checked  
+  ```
+    - variables declared with dyn are not type-checked and their type can change during runtime
 
-mySecondVar = true // no error: mySecondVar is dynamic and can change types during runtime
+  ```
+  dyn mySecondVar = 10 // mySecondVar is not type-checked at compile time
 
-const myConstantVar = 10 // myConstantVar is not mutable and set to an Integer
+  mySecondVar = true // no error: mySecondVar is dynamic and can change types during runtime
+  ```
+    - variable declarations without assignments return null when used and are not type-checked until assigned (expect for dyn variables)
 
-myConstantVar = 5 // error: myConstantVar is not mutable
+  ```
+  var myVarVariable // will be type-checked when assigned a value; evaluates to null until then
 
-myConstantVar = true // error: myConstantVar is not mutable and type-checked  
-```
+  myVarVariable = 10 // now type-checked to be an Integer
+  ```
+    - cont variables must be assigned when declared and are evaluated at compile time (operations and math can still be preformed as long as they are also cont)
 
-## Function Declaration
+  ```
+  cont x = 0
+
+  cont y = 1
+
+  cont z = + (x, y) // correct: still declared with cont functions and/or variables
+
+  cont a = + (x, 3) // correct: numbers are considered cont
+
+  var b = 3
+
+  cont c = + (a, b) // error: b is not cont
+  ```
+
+## Functions
+
 - functions are declared similarly to variables
+    - functions are assigned with a "=" followed by a parameters list enclosed by "()" and delimited by ","
+    - the function body is declared in "{}" after the "()"
+    - functions are not required to return anything but always return null if no return is specified (subject to change)
+    - functions that never return anything should be declared with var
+
+  ```
+  var myFunction = () {} // basic function structure; will return null when executed since there is not return statement
+  ```
 - functions declared with var can only contain return statements of one type and are type-checked
+
+  ```
+  var myFunction = (int x, int y) {return * (x, y)} // only returns type of int and is correctly declared with var
+  ```
 - functions declared with const can only use const variables and must return a const
+
+  ```
+  const myFunction = (const int x, const int y) {return * (x, y)} // correct: function is const and relies only on const variables
+
+  const myFunction = (int x, int y) {return * {x, y}} // error: a const function can only use const parameters
+  ```
 - functions declared with dyn can return multiple types
-- functions are assigned with a "=" followed by a parameters list enclosed by "()" and delimited by ","
-- the function body is declared in "{}" after the "()"
-- functions are not required to return anything but always return null if not return is specified (subject to change)
-- functions that never return anything should be declared with var
+
+  ```
+  dyn myFunction = (dyn x, dyn y) {return * (x, y)} // correct: function is dyn and returns a dyn
+
+  dyn myFunction = (int x, int y) {return * (x, y)} // iffy: var should be used since only one type is ever possibly returned although it is not illegal
+
+  var myFunction = (dyn x, dyn y) {return * (x, y)} // error: the return type of myFunction is undefined since dyn variables are used
+  ```
 - functions that can either return or not return anything should be declared with dyn
+   - if nothing is returned null is returned instead
 
-```
-var myFunction = () {} // basic function structure; will return null when executed since there is not return statement
+  ```
+  dyn myFunction = (dyn x) {
+    if (< (x, 0)) { // if statements and comparisons explained later
+      return x
+    } else {
+      print "Invalid X"
+    }
+  } // correct: the function can finish through returning or without returning so dyn should be used
+  ```
+- inside the parameters list "..." can be used to specify an unlimited number of additional arguments may be supplied
 
-var myFunction = (int x, int y) {return * (x, y)} // only returns type of int and is correctly declared with var
+  ```
+  var myFunction = (dyn x, dyn y) {return (int) * (x, y)} // ok: the return type is guaranteed to be castable to an int; may still result in an error if * (x, y) cannot be cast to an int
 
-dyn myFunction = (int x, int y) {return * (x, y)} // var should be used since only one type is ever possibly returned although it is not illegal
+  var myFunction = (int a, int b, ...) { // example of using the unlimited arguments feature "..."
+    var total = + (a, b)
+    for (var i = 0; i < args.length(); i++) {
+      total += args[i]
+    }
+    return total
+  }
+  ```
+- functions can also be stored to variables
 
-const myFunction = (const int x, const int y) {return * (x, y)} // correct: function is const and relies only on const variables
+  ```
+  var myVariable = 10
 
-const myFunction = (int x, int y) {return * {x, y}} // error: a const function can only use const parameters
+  var myFunction = (int a) {
+    return * (a, 10)
+  }
 
-var myFunction = (dyn x, dyn y) {return * (x, y)} // error: the return type of myFunction is undefined since dyn variables are used
+  myVariable = myFunction; // legal: they are both var and return the same type
 
-var myFunction = (dyn x, dyn y) {return (int) * (x, y)} // ok: the return type is guaranteed to be castable to an int; may still result in an error if * (x, y) cannot be cast to an int  
-```
+  myFunction = 5 // also legal: again, the return type is still the same
+  ```
+- functions can also be stored to other functions with partial or all parameters specified
+
+  ```
+  var myFunction = (int x, int y) {return * (x, y)}
+
+  var secondFunction = (int x) myFunction(x, 2)
+  ```
+    - can also be used with "..."
+
+  ```
+  var myFunction = (int x, int y, ...) {
+    var total = + (a, b)
+    for (var i = 0; i < args.length(); i++) {
+      total += args[i]
+    }
+    return total
+  }
+
+  var secondFunction = (int x) myFunction(x, 2, 3) // legal
+  ```
+- functions can specify a default value if a parameter is not passed
+
+  ```
+  var myFunction = (int x; 5, int y; 2) {return * (x, y)}
+
+  print myFunction() // outputs 10
+  ```
+
+## Starting point of the program:
+- the program always starts with a function declared as main
+- the parameters list must include "..." for arguments passed in from the command line
+- return is not necessary but can be used for errors
+
+  ```
+  var main = (...) {
+    return 0 // error code for successful completion
+  }
+
+  var main = (...) {
+    return + (2, 3) // not correct use for main's return
+  }
+  ```
+
+## Loops
+- Same structure as Java, C, C++, and Javascript
+  - For Loop
+
+  ```
+  for (initialization; condition; increment/decrement) {
+    // code to loop through
+  }
+  ```
+  - While Loop
+
+  ```
+  while (condition) {
+    // code to loop through
+  }
+  ```
+  - Do-While Loop
+
+  ```
+  do {
+    // code to loop through
+  } while (condition)
+  ```
+
+## Casting
+
+- In NAPL, casting is a function unlike Java or C++
+    - The typical structure is "castTo" followed by the type surrounded by "<>"
+    - Can be used on both var and dyn variables and functions
+    - Can be used to make a dyn variable a var variable
+
+  ```
+  var myVariable = 10
+
+  var myOtherVariable = castTo<Double>(myVariable)
+
+  dyn myDynVariable = 10
+
+  var notADynVariable = castTo<Int>(myDynVariable) // legal: casting narrows a dyn to a var
+  ```
+    - 
