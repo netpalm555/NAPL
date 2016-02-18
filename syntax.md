@@ -213,4 +213,54 @@
 
   var notADynVariable = castTo<Int>(myDynVariable) // legal: casting narrows a dyn to a var
   ```
-    - 
+
+## Objects
+
+- NAPL is a prototype-based programming language similar to Javascript.
+    - objects are created using functions as the base template which provides the constructor
+    - the prototype of a object can be changed by modifying the _proto on the new object
+
+  ```
+  var PointObject = (int x, int y) { // PointObject works as a factory to create point objects and supplies the initial constructor
+    this.x = x
+    this.y = y
+  }
+
+  PointObject.printSomething = () {
+    print "Something"
+  }
+
+  var myPoint = new PointObject (0, 0) // The prototype of myPoint is now PointObject
+
+  PointObject.someFunction = () { // Adds the function someFunction to the PointObject
+    print "Hi"
+  }
+
+  PointObject.someFunction // Not valid: PointObject is not actually an object and is more of a template
+
+  myPoint.someFunction // Valid: The program will search for someFunction on the prototype tree and finds it on PointObject; will output "Hi"
+
+  myPoint.someFunction = () {
+    print "Bye"
+  }
+
+  myPoint.printSomething // Outputs "Something" by looking for the function on the prototype
+
+  myPoint.someFunction // Prints "Bye" but does not alter PointObject
+
+  var otherPoint = new PointObject (1,1)
+
+  otherPoint.someFunction // Prints "Hi" from the prototype
+
+  otherPoint._proto.someFunction = () { // Can be dangerous as all PointObjects are changed unless they override the prototype function
+    print "Hello"
+  }
+
+  otherPoint.someFunction // Prints "Hello"
+
+  myPoint.someFunction // Still prints "Bye" because myPoint has its own someFunction
+
+  var lastPoint = new PointObject(2,2)
+
+  lastPoint.someFunction // Prints "Hello" because lastPoint does not have it's own someFunction and therefore uses the one provided by PointObject
+  ```
