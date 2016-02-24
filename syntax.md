@@ -169,6 +169,10 @@
   }
 
   var main = (...) {
+
+  } // perfectly fine because return is not required
+
+  var main = (...) {
     return + (2, 3) // not correct use for main's return
   }
   ```
