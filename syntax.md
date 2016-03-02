@@ -268,3 +268,26 @@
 
   lastPoint.someFunction // Prints "Hello" because lastPoint does not have it's own someFunction and therefore uses the one provided by PointObject
   ```
+
+## Packages
+
+- Packages in NAPL are created by exporting functions/objects using the export() function.
+    - The export() function requires a String followed by any number of functions/objects.
+
+  ```
+  var someFunction = () {
+    print "I am a function"
+  }
+
+  var anotherFunction = () {
+    print "I'm another function"
+  }
+
+  export("myPackage", someFunction)
+  ```
+    - Other files my now access "someFunction" and "anotherFunction" by importing "myPackage"
+
+  ```
+  import myPackage
+  myPackage.someFunction() // Prints "I am a function"
+  ```
