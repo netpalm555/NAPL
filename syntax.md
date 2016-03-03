@@ -150,10 +150,10 @@
 
   var secondFunction = (int x) myFunction(x, 2, 3) // legal
   ```
-- functions can specify a default value if a parameter is not passed
+- functions can specify a default value if a parameter is not passed with a ":"
 
   ```
-  var myFunction = (int x; 5, int y; 2) {return * (x, y)}
+  var myFunction = (int x: 5, int y: 2) {return * (x, y)}
 
   print myFunction() // outputs 10
   ```
@@ -240,33 +240,33 @@
     print "Hi"
   }
 
-  PointObject.someFunction // Not valid: PointObject is not actually an object and is more of a template
+  PointObject.someFunction() // Not valid: PointObject is not actually an object and is more of a template
 
-  myPoint.someFunction // Valid: The program will search for someFunction on the prototype tree and finds it on PointObject; will output "Hi"
+  myPoint.someFunction() // Valid: The program will search for someFunction on the prototype tree and finds it on PointObject; will output "Hi"
 
   myPoint.someFunction = () {
     print "Bye"
   }
 
-  myPoint.printSomething // Outputs "Something" by looking for the function on the prototype
+  myPoint.printSomething() // Outputs "Something" by looking for the function on the prototype
 
-  myPoint.someFunction // Prints "Bye" but does not alter PointObject
+  myPoint.someFunction() // Prints "Bye" but does not alter PointObject
 
   var otherPoint = new PointObject (1,1)
 
-  otherPoint.someFunction // Prints "Hi" from the prototype
+  otherPoint.someFunction() // Prints "Hi" from the prototype
 
   otherPoint._proto.someFunction = () { // Can be dangerous as all PointObjects are changed unless they override the prototype function
     print "Hello"
   }
 
-  otherPoint.someFunction // Prints "Hello"
+  otherPoint.someFunction() // Prints "Hello"
 
-  myPoint.someFunction // Still prints "Bye" because myPoint has its own someFunction
+  myPoint.someFunction() // Still prints "Bye" because myPoint has its own someFunction
 
   var lastPoint = new PointObject(2,2)
 
-  lastPoint.someFunction // Prints "Hello" because lastPoint does not have it's own someFunction and therefore uses the one provided by PointObject
+  lastPoint.someFunction() // Prints "Hello" because lastPoint does not have it's own someFunction and therefore uses the one provided by PointObject
   ```
 
 ## Packages
@@ -289,5 +289,6 @@
 
   ```
   import myPackage
+
   myPackage.someFunction() // Prints "I am a function"
   ```
