@@ -1,6 +1,9 @@
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.io.*;
+import java.lang.*;
+import java.net.*;
 
 public class Main {
 
@@ -11,7 +14,22 @@ public class Main {
             switch ((String) cliInputs.next()) {
                 case "-h":
                 case "--help":
-                    System.out.println("This will be the help file for the NAPL parser.");
+                    Class cls;
+                    try {
+                        cls = Class.forName("Main");
+                        ClassLoader cloader = cls.getClassLoader();
+                        URL helpURL = cloader.getResource("resc/help.txt");
+                        try (BufferedReader br = new BufferedReader(new InputStreamReader(helpURL.openStream()))) {
+                            String line = null;
+                            while ((line = br.readLine()) != null) {
+                                System.out.println(line);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "--syntaxcheck":
                     if (cliInputs.hasNext()) {
