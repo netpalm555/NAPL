@@ -1,1 +1,1 @@
-java -cp ./NAPL\ Parser/bin Main $1 $2
+java -cp ./NAPL\ Parser/bin Main $1 "$2"

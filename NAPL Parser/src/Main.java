@@ -31,7 +31,7 @@ public class Main {
                         e.printStackTrace();
                     }
                     break;
-                case "--syntaxcheck":
+                case "--checksyntax":
                     if (cliInputs.hasNext()) {
                         SyntaxChecker checker = new SyntaxChecker((String) cliInputs.next());
                         checker.checkSyntax();
@@ -45,5 +45,4 @@ public class Main {
             }
         }
     }
-
 }
