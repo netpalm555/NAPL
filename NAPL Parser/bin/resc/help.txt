@@ -1,0 +1,8 @@
+Usage napl [options] file...
+Options:
+    -h|--help       This help file
+    -s|--source     Folder to look for files to compile
+    -o|--output     Folder to output compiled files
+    --checksyntax   Check just the syntax of the following files
+    --version       Print the version of this tool
+    -v|--verbose    Use verbose mode
