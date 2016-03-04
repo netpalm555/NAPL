@@ -20,7 +20,7 @@ public class Main {
                         ClassLoader cloader = cls.getClassLoader();
                         URL helpURL = cloader.getResource("resc/help.txt");
                         try (BufferedReader br = new BufferedReader(new InputStreamReader(helpURL.openStream()))) {
-                            String line = null;
+                            String line;
                             while ((line = br.readLine()) != null) {
                                 System.out.println(line);
                             }
