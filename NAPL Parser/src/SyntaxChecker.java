@@ -52,7 +52,9 @@ public class SyntaxChecker {
                 System.out.println("Invalid variable name: " + varName);
             }
             if (lineIterator.hasNext()) {
-                
+                switch (lineIterator.next()) {
+                    
+                }
             }
         }
     }
