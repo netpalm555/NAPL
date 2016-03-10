@@ -39,8 +39,13 @@ public class SyntaxChecker {
         System.out.println("Type is " + type.toString());
         if (lineIterator.hasNext()) {
             String varName = (String) lineIterator.next();
-            if (!varName.matches("")) return false;
-            System.out.println("Variable name: " + lineIterator.next());
+            String[] varNameSplit = varName.split("=");
+            System.out.println(varNameSplit.length);
+            if (varNameSplit.length > 1) {
+                varName = varNameSplit[0];
+            }
+            System.out.println("Variable name: " + varName);
+            if (!varName.matches("^[a-zA-z0-9]+$")) return false;
             if (lineIterator.hasNext()) {
                 
             }
