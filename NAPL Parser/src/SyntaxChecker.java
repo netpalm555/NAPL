@@ -21,14 +21,35 @@ public class SyntaxChecker {
             List<String> line;
             Iterator lineIterator;
             while (scan.hasNext()) {
-                line = Arrays.asList(scan.nextLine().split(" ", 0));
-                lineIterator = line.iterator();
-                while (lineIterator.hasNext()) {
-                    System.out.println(lineIterator.next());
+                switch (scan.next()) {
+                    case "var":
+                        checkVariable(FuncType.VAR, scan);
+                        break;
+                    case "dyn":
+                        checkVariable(FuncType.DYN, scan);
+                        break;
                 }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
+
+    private boolean checkVariable(FuncType type, Iterator lineIterator) {
+        System.out.println("Type is " + type.toString());
+        if (lineIterator.hasNext()) {
+            String varName = (String) lineIterator.next();
+            if (!varName.matches("")) return false;
+            System.out.println("Variable name: " + lineIterator.next());
+            if (lineIterator.hasNext()) {
+                
+            }
+        }
+        return true;
+    }
+
+}
+
+enum FuncType{
+    DYN, VAR
 }

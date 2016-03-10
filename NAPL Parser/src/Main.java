@@ -9,6 +9,7 @@ public class Main {
 
     public static void main (String[] args) {
         List<String> argsList = Arrays.asList(args);
+//        argsList.forEach(System.out::println);
         Iterator cliInputs = argsList.iterator();
         if (cliInputs.hasNext()) {
             switch ((String) cliInputs.next()) {
