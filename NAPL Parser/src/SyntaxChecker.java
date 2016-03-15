@@ -43,20 +43,41 @@ public class SyntaxChecker {
         if (lineIterator.hasNext()) {
             String varName = (String) lineIterator.next();
             String[] varNameSplit = varName.split("=");
+            String next = null;
             if (varNameSplit.length > 1) {
                 varName = varNameSplit[0];
+                next = varNameSplit[1];
+            } else {
+                if (lineIterator.hasNext()) {
+                    next = (String) lineIterator.next();
+                } else {
+                    System.out.println("Error on line: " + lineNum);
+                    System.out.println("Unexpected end of line");
+                }
             }
             System.out.println("Variable name: " + varName);
             if (!varName.matches("^[a-zA-z0-9]+$")) {
                 System.out.println("Error on line: " + lineNum);
                 System.out.println("Invalid variable name: " + varName);
             }
-            if (lineIterator.hasNext()) {
-                switch ((String) lineIterator.next()) {
-                    case "\n":
-                        System.out.println("End of line");
-                        break;
-                }
+            switch (next) {
+                case "(":
+                    checkParameters(lineIterator);
+                    break;
+                case "\n":
+                    System.out.println("End of line");
+                    break;
+                default:
+                    System.out.println("Error on line: " + lineNum);
+                    break;
+            }
+        }
+    }
+
+    private void checkParameters(Iterator lineIterator) {
+        while (lineIterator.hasNext()) {
+            if (((String) lineIterator.next()).matches("[)]&")) {
+
             }
         }
     }
