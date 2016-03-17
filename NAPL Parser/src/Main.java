@@ -1,9 +1,9 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.io.*;
-import java.lang.*;
-import java.net.*;
 
 public class Main {
 
@@ -30,6 +30,14 @@ public class Main {
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
+                    }
+                    break;
+                case "--lex":
+                    if (cliInputs.hasNext()) {
+                        Lexer lex = new Lexer((String) cliInputs.next());
+                        lex.lex();
+                    } else {
+                        System.out.println("Please provide a file to lex");
                     }
                     break;
                 case "--checksyntax":
