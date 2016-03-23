@@ -7,9 +7,8 @@ import java.util.List;
 
 public class Main {
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         List<String> argsList = Arrays.asList(args);
-//        argsList.forEach(System.out::println);
         Iterator cliInputs = argsList.iterator();
         if (cliInputs.hasNext()) {
             switch ((String) cliInputs.next()) {
@@ -36,6 +35,15 @@ public class Main {
                     if (cliInputs.hasNext()) {
                         Lexer lex = new Lexer((String) cliInputs.next());
                         lex.lex();
+                    } else {
+                        System.out.println("Please provide a file to lex");
+                    }
+                    break;
+                case "--checkLRSeparators":
+                    if (cliInputs.hasNext()) {
+                        Lexer lex = new Lexer((String) cliInputs.next());
+                        SeparatorChecker checker = new SeparatorChecker(lex.lex());
+                        checker.check();
                     } else {
                         System.out.println("Please provide a file to lex");
                     }

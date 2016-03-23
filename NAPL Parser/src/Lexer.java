@@ -25,38 +25,52 @@ public class Lexer {
         Collections.addAll(keywords, "var", "dyn", "new", "main", "print", "...");
     }
 
-    public void lex() {
+    public List<Token> lex() {
         List<Token> tokens = new ArrayList<>();
         try (FileReader fileReader = new FileReader(fileToCheck)) {
             try (BufferedReader reader = new BufferedReader(fileReader)) {
                 String line;
                 String current = "";
+                String last = "";
                 TokenID lastToken = TokenID.NONE;
                 TokenID currentToken;
+                boolean exportNow = false;
+                System.out.println("Original Code:");
                 while ((line = reader.readLine()) != null) {
                     System.out.println(line);
                     for (int i = 0; i < line.length(); i++) {
-                        if (String.valueOf(line.charAt(i)).matches("[a-zA-Z]")) {
+                        current = String.valueOf(line.charAt(i));
+                        if (current.matches("[a-zA-Z]")) {
                             currentToken = TokenID.IDENTIFIER;
-                        } else if (String.valueOf(line.charAt(i)).matches("[\\.]")) {
+                            exportNow = false;
+                        } else if (current.matches("[\\.]")) {
                             currentToken = TokenID.SEPARATOR;
-                        } else if (String.valueOf(line.charAt(i)).matches("[\\(\\{\\[]")) {
+                            exportNow = false;
+                        } else if (current.matches("[\\(\\{\\[]")) {
                             currentToken = TokenID.L_SEPARATOR;
-                        } else if (String.valueOf(line.charAt(i)).matches("[\\)\\}\\]]")) {
+                            exportNow = true;
+                        } else if (current.matches("[\\)\\}\\]]")) {
                             currentToken = TokenID.R_SEPARATOR;
-                        } else if (String.valueOf(line.charAt(i)).matches("[\\\\/<>=-\\\\+]")) {
+                            exportNow = true;
+                        } else if (current.matches("[\\\\/<>=-\\\\+]")) {
                             currentToken = TokenID.OPERATOR;
+                            exportNow = false;
                         } else {
+                            currentToken = TokenID.NONE;
+                            exportNow = false;
+                        }
+                        if (exportNow) {
+                            tokens.add(new Token(current, currentToken));
+                            current = "";
                             currentToken = TokenID.NONE;
                         }
                         if (lastToken != currentToken && lastToken != TokenID.NONE) {
-                            tokens.add(new Token(current, lastToken));
-                            current = currentToken == TokenID.NONE ? "" : String.valueOf(line.charAt(i));
+                            tokens.add(new Token(last, lastToken));
+                            last = currentToken == TokenID.NONE ? "" : current;
                         } else {
-                            current += currentToken == TokenID.NONE ? "" : line.charAt(i);
+                            last += currentToken == TokenID.NONE ? "" : current;
                         }
-                        if (keywords.contains(current)) currentToken = TokenID.KEYWORD;
-//                        System.out.println("Current: " + current + ", TokenID: " + currentToken);
+                        if (keywords.contains(last)) currentToken = TokenID.KEYWORD;
                         lastToken = currentToken;
                     }
                     if (lastToken != TokenID.NONE) tokens.add(new Token(current, lastToken));
@@ -70,6 +84,8 @@ public class Lexer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("\nCaptured Tokens:");
         tokens.forEach(System.out::println);
+        return tokens;
     }
 }
