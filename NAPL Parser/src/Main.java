@@ -17,8 +17,8 @@ public class Main {
                     Class cls;
                     try {
                         cls = Class.forName("Main");
-                        ClassLoader cloader = cls.getClassLoader();
-                        URL helpURL = cloader.getResource("resc/help.txt");
+                        ClassLoader cLoader = cls.getClassLoader();
+                        URL helpURL = cLoader.getResource("resc/help.txt");
                         try (BufferedReader br = new BufferedReader(new InputStreamReader(helpURL.openStream()))) {
                             String line;
                             while ((line = br.readLine()) != null) {
@@ -48,7 +48,7 @@ public class Main {
                         System.out.println("Please provide a file to lex");
                     }
                     break;
-                case "--checksyntax":
+                case "--checkSyntax":
                     if (cliInputs.hasNext()) {
                         SyntaxChecker checker = new SyntaxChecker((String) cliInputs.next());
                         checker.checkSyntax();
