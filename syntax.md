@@ -13,7 +13,7 @@
   ```
 
 ## Variables:
-- all variable's types are inferred by the compiler
+- all variable'lexeme types are inferred by the compiler
     - variables declared with var are type-checked at compile time
 
   ```
@@ -173,7 +173,7 @@
   } // perfectly fine because return is not required
 
   var main = (...) {
-    return + (2, 3) // not correct use for main's return
+    return + (2, 3) // not correct use for main'lexeme return
   }
   ```
 
@@ -266,7 +266,7 @@
 
   var lastPoint = new PointObject(2,2)
 
-  lastPoint.someFunction() // Prints "Hello" because lastPoint does not have it's own someFunction and therefore uses the one provided by PointObject
+  lastPoint.someFunction() // Prints "Hello" because lastPoint does not have it'lexeme own someFunction and therefore uses the one provided by PointObject
   ```
 
 ## Packages

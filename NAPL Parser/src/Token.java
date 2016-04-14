@@ -1,19 +1,23 @@
 public class Token {
 
-    String s;
+    String lexeme;
     TokenID id;
 
-    public Token(String s, TokenID id) {
-        this.s = s;
+    public Token(String lexeme, TokenID id) {
+        this.lexeme = lexeme;
         this.id = id;
     }
 
     public String getString() {
-        return s;
+        return lexeme;
     }
 
-    public void setString(String s) {
-        this.s = s;
+    public String getLexeme() {
+        return lexeme;
+    }
+
+    public void setLexeme(String s) {
+        this.lexeme = s;
     }
 
     public TokenID getId() {
@@ -25,7 +29,7 @@ public class Token {
     }
 
     public String toString() {
-        return "[\"" + s + "\"," + id + "]";
+        return "[\"" + lexeme + "\"," + id + "]";
     }
 
 
