@@ -3,21 +3,17 @@ public class Token {
     String lexeme;
     TokenID id;
 
-    public Token(String lexeme, TokenID id) {
+    public Token(TokenID id, String lexeme) {
         this.lexeme = lexeme;
         this.id = id;
-    }
-
-    public String getString() {
-        return lexeme;
     }
 
     public String getLexeme() {
         return lexeme;
     }
 
-    public void setLexeme(String s) {
-        this.lexeme = s;
+    public void setLexeme(String lexeme) {
+        this.lexeme = lexeme;
     }
 
     public TokenID getId() {
@@ -28,11 +24,9 @@ public class Token {
         this.id = id;
     }
 
+    @Override
     public String toString() {
         return "[\"" + lexeme + "\"," + id + "]";
     }
 
-
 }
-
-

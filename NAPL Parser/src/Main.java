@@ -35,27 +35,10 @@ public class Main {
                     if (cliInputs.hasNext()) {
                         long startTime = System.currentTimeMillis();
                         String loc = (String) cliInputs.next();
-                        new BetterLexer().lex(loc).forEach(System.out::println);
+                        new Lexer().lex(loc).forEach(System.out::println);
                         System.out.println(System.currentTimeMillis() - startTime);
                     } else {
                         System.out.println("Please provide a file to lex");
-                    }
-                    break;
-                case "--checkLRSeparators":
-                    if (cliInputs.hasNext()) {
-                        Lexer lex = new Lexer((String) cliInputs.next());
-                        SeparatorChecker checker = new SeparatorChecker(lex.lex());
-                        checker.check();
-                    } else {
-                        System.out.println("Please provide a file to lex");
-                    }
-                    break;
-                case "--checkSyntax":
-                    if (cliInputs.hasNext()) {
-                        SyntaxChecker checker = new SyntaxChecker((String) cliInputs.next());
-                        checker.checkSyntax();
-                    } else {
-                        System.out.println("Please provide a file to check for syntax");
                     }
                     break;
                 default:
