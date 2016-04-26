@@ -33,8 +33,10 @@ public class Main {
                     break;
                 case "--lex":
                     if (cliInputs.hasNext()) {
-                        Lexer lex = new Lexer((String) cliInputs.next());
-                        lex.lex();
+                        long startTime = System.currentTimeMillis();
+                        String loc = (String) cliInputs.next();
+                        new BetterLexer().lex(loc).forEach(System.out::println);
+                        System.out.println(System.currentTimeMillis() - startTime);
                     } else {
                         System.out.println("Please provide a file to lex");
                     }

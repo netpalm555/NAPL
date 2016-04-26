@@ -1,0 +1,15 @@
+public enum NewTokenId {
+    IDENTIFIER, STRING, // Strings
+    BINARY, HEXADECIMAL, DECIMAL, INTEGER, OCTAL, // Numbers
+    TRUE, FALSE, // Booleans
+    LEFT_PARENTHESES, RIGHT_PARENTHESES, LEFT_BRACKETS, RIGHT_BRACKETS, // Separators
+    ASSIGNMENT, PLUS_EQUALS, MINUS_EQUALS, DIVIDE_EQUALS, MULTIPLY_EQUALS, INCREMENT, DECREMENT, // Assignment
+    LESS_THAN, GREATER_THAN, EQUAL_TO, LESS_THAN_OR_EQUAL, GREATER_THAN_OR_EQUAL, // Comparison Operators
+    AND, OR, // Logical Operators
+    TERNARY, COLON, // Conditional Operators
+    // Binary Operators
+    PLUS, MINUS, DIVIDE, MULTIPLY, DOT, // Other Operators
+    IF, ELSE, WHILE, FOR, VAR, DYN, CONST, MAIN, ETC, EXPORT, // Keywords
+    NEWLINE,
+    ERROR // Errors
+}

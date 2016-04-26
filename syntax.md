@@ -13,7 +13,7 @@
   ```
 
 ## Variables:
-- all variable'lexeme types are inferred by the compiler
+- all variable types are inferred by the compiler
     - variables declared with var are type-checked at compile time
 
   ```

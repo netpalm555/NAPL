@@ -1,0 +1,1 @@
+Identifier - Start with "_"(underscore) or letter. It can be followed by "_"(underscore), letter, or number
